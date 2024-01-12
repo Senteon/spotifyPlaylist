@@ -9,7 +9,6 @@ baseURL = 'https://api.spotify.com/v1/'
 
 #   Have user input their client and secret info
 #   TODO: Allow for users to login to spotify to get token
-
 MAX_FETCH = 100
 
 
@@ -50,17 +49,16 @@ customList = []
 
 #   Read and create custom list out of query JSON
 while (offset < tot):
-    queryResult = requests.get(baseURL + 'playlists/' + playlistID + '/tracks' + '?fields=total,items(track(external_urls))&offset={}'.format(offset), headers = header)
+    queryResult = requests.get(baseURL + 'playlists/' + playlistID + '/tracks' + '?fields=total,items(track(name, artists(name), external_urls))&offset={}'.format(offset), headers = header)
     for entry in queryResult.json()['items']:
         songEntry = ""
         songEntry = entry['track']['external_urls']['spotify']
         customList.append(songEntry)
     offset += MAX_FETCH
 
+f = open("dump.txt", "w+")
 
 for songEntry in customList:
-    print(songEntry)
-
-
+    f.write(f"{songEntry}\n")
 
 
