@@ -1,6 +1,5 @@
 import requests
 import json
-from youtubesearchpython import VideosSearch
 
 #   Required information to get an access token
 authURL = 'https://accounts.spotify.com/api/token'
@@ -60,13 +59,6 @@ while (offset < tot):
         songEntry[1].append(entry['track']['name'])
         customList.append(songEntry)
     offset += MAX_FETCH
-
-#   Use YoutubeSearch to find links for all songs and add to lists.
-videosSearch = VideosSearch('', limit = 1)
-
-for songEntry in customList:
-    videosSearch.query = "{} {}".format(songEntry[0][0], songEntry[1][0])
-    songEntry.append([videosSearch.result()['result'][0]['link']])
 
 
 
